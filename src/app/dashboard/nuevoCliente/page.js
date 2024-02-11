@@ -1,10 +1,13 @@
+
+
 export default function Home() {
+    
   
   return (
     <main className="min-h-[100dvh] p-6">
       <h1 className="font-bold text-2xl">Nuevo Cliente</h1>
       <div className="flex justify-center items-center min-h-[90dvh]">
-        <div className="flex flex-col gap-3 bg-white rounded-2xl px-4 py-8 w-[50%]">
+        <form className="flex flex-col gap-3 bg-white rounded-2xl px-4 py-8 w-[50%]">
                 <div className="mb-4">
                     <label
                         className="text-gray-800"
@@ -77,9 +80,9 @@ export default function Home() {
                 <input 
                         type="submit"
                         className=' rounded-md mt-5 w-full bg-slate-900 p-3 uppercase font-bold text-white text-lg hover:bg-slate-800'
-                        value="Registrar Cliente"
+                        value="Registrar Cliente"                        
                     />
-            </div>
+            </form>
             
         </div>
     </main>

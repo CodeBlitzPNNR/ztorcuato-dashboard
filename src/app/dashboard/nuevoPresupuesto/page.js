@@ -1,54 +1,46 @@
 "use client";
+
 import { useState } from "react";
-import { formatCurrency } from "@/app/helpers";
+import { formatCurrency, sumaTotal, toastTrigger } from "@/app/helpers";
+import { useForm } from "react-hook-form";
+import TotalShowcase from "@/app/components/TotalShowcase";
 import "./table.css";
+
 
 export default function Home() {
   const [envio, setEnvio] = useState(false);
   const [detalle, setDetalle] = useState([]);
-  const [total, setTotal] = useState();
-  const detalleMock = [
-    {
-      codigo: 1,
-      cantidad: 1,
-      detalle: 'La pija',
-      precio: 3500,
-      impuesto: true,      
-    },{
-      codigo: 2,
-      cantidad: 3,
-      detalle: 'La pija',
-      precio: 5100,
-      impuesto: false,      
-    },{
-      codigo: 3,
-      cantidad: 2,
-      detalle: 'La pija',
-      precio: 3500,
-      impuesto: true,      
-    },{
-      codigo: 4,
-      cantidad: 21,
-      detalle: 'La pija',
-      precio: 500,
-      impuesto: true,      
-    },]
+  const [cliente, setCliente] = useState({});    
+  const { register, handleSubmit, reset } = useForm();  
 
-  const agregarItem = (item) => {    
-    setDetalle(...detalleMock, item)
-    calcularTotal()
+  const agregarItem = (item) => {        
+    setDetalle([...detalle, item]);
+    toastTrigger('success', 'Item agregado');
+    reset();  
+  }
+
+  const agregarCliente = (data) => {             
+    setCliente({
+      razonSocial: data.razon,
+      fecha: data.fecha,
+      metodo: data.metodo,
+      envio: data.envio,
+      costo: data.costo,      
+    });
+    toastTrigger('success', 'Cliente confirmado');    
+  }
+
+  const postPresupuesto = () => {
+    const presup = {
+      ...cliente, 
+        detalle: detalle              
+    }
+    console.log(presup)
   }
 
   const handleChange = () => {
     setEnvio(!envio);    
-  };
-
-  const calcularTotal = () => {    
-    const subTotal = detalleMock.reduce((acc, item) => {
-      return acc + item.precio * item.cantidad
-    }, 0);
-    setTotal(subTotal)
-    }
+  };  
     
   const handleEdit = () => {
     console.log('Editando')
@@ -61,84 +53,15 @@ export default function Home() {
   return (
     <main className="min-h-[100dvh] p-6">
       <h1 className="font-bold text-2xl">Nuevo Presupuesto</h1>
-      <div className="flex justify-center items-center min-h-[90dvh] max-w-[1024px] m-auto">
-        <div className="flex flex-col bg-white rounded-2xl px-3 py-3 w-full">
-          <div className="mb-2 p-2">
-            {/* RAZON SOCIAL */}
-            <label className="text-gray-800 text-md font-bold" htmlFor="nombre">
-              Razón Social:
-            </label>
-            <input
-              id="razon-social"
-              type="text"
-              className="block w-full px-2 py-1 bg-gray-100 rounded-lg"
-              placeholder="Razón social del cliente"
-              name="razon-social"
-            />
-          </div>
+      <div className="flex flex-col justify-center items-center min-h-[40dvh] max-w-[1024px] m-auto gap-10">        
 
-          {/* FECHA */}
-          <div className="mb-2 p-2">
-            <label className="text-gray-800 text-md font-bold" htmlFor="nombre">
-              Fecha:
-            </label>
-            <input
-              id="date"
-              type="date"
-              className="block w-full px-2 py-1 bg-gray-100 rounded-lg"
-              placeholder="Fecha"
-              name="fecha"
-            />
-          </div>
 
-          {/* METODO DE PAGO */}
-          <div className="mb-2 p-2">
-            <label className="text-gray-800 text-md font-bold" htmlFor="nombre">
-              Método de pago:
-            </label>
-            <input
-              id="metodo"
-              type="text"
-              className="block w-full px-2 py-1 bg-gray-100 rounded-lg"
-              placeholder="Método de pago"
-              name="metodo"
-            />
-          </div>
+        {/* FORMULARIO DETALLE DE PRODUCTOS Y SERVICIOS */}
 
-          {/* ENVIO */}
-          <div className="mb-2 p-2">
-            <label className="text-gray-800 text-md font-bold" htmlFor="nombre">
-              Envío
-            </label>
-            <input
-              id="envio"
-              type="checkbox"
-              className="mx-2 px-2 py-1 bg-gray-100 rounded-lg"
-              name="envio"
-              onChange={handleChange}
-            />
-          </div>
 
-          {/* COSTO DE ENVIO */}
-          {envio ? (
-            <div className="mb-2 p-2">
-              <label
-                className="text-gray-800 text-md font-bold"
-                htmlFor="nombre"
-              >
-                Costo de envío
-              </label>
-              <input
-                id="costo"
-                type="number"
-                className="block w-full px-2 py-1 bg-gray-100 rounded-lg"
-                placeholder="Costo de envío"
-                name="costo"
-              />
-            </div>
-          ) : null}
-
-          <hr className="my-2" />
+        <form onSubmit={handleSubmit((data) => {                    
+          agregarItem(data)
+        })} className="flex flex-col bg-gray-300 rounded-2xl px-3 py-3 w-full">          
 
           {/* DETALLE */}
           <div>
@@ -161,7 +84,7 @@ export default function Home() {
                 type="number"
                 className="mt-2 block w-full p-3 bg-gray-50"
                 placeholder="Código del producto"
-                name="codigo"
+                {...register('codigo')}
               />
             </div>
 
@@ -172,11 +95,11 @@ export default function Home() {
                 Detalle del item:
               </label>
               <input
-                id="detalle"
+                id="descripcion"
                 type="textarea"
                 className="mt-2 block w-full p-3 bg-gray-50"
                 placeholder="Ingrese descripcion del producto o servicio"
-                name="detalle"
+                {...register('descripcion')}
               />
             </div>
 
@@ -191,7 +114,7 @@ export default function Home() {
                 type="number"
                 className="mt-2 block w-full p-3 bg-gray-50"
                 placeholder="Cantidad de items"
-                name="cantidad"
+                {...register('cantidad')}
               />
             </div>
 
@@ -207,7 +130,7 @@ export default function Home() {
                 type="number"
                 className="mt-2 block w-full p-3 bg-gray-50"
                 placeholder="Precio individual"
-                name="precio"
+                {...register('precio')}
               />
             </div>
 
@@ -222,20 +145,20 @@ export default function Home() {
                   id="impuesto"
                   type="checkbox"
                   className="mx-2"
-                  name="impuesto"
+                  {...register('impuesto')}
                 />
               </div>
-              <input
-                type="submit"
+              <button 
                 className=" max-w-[40%] rounded-md w-full bg-slate-800 p-3 uppercase font-bold text-white text-lg hover:bg-slate-600"
-                value="Agregar item"
-                onClick={agregarItem}
-              />
+                type='submit'>
+                  Agregar item
+              </button>                           
             </div>
           </div>
 
           <hr className="my-2" />
 
+          {detalle ?
           <table className="blueTable my-4">
             <thead>
               <tr>
@@ -250,12 +173,12 @@ export default function Home() {
             </thead>
 
             <tbody>
-              {detalleMock.map((det, index) => {
+              {detalle.map((det, index) => {
                 return (
                   <tr key={index}>
                     <td>{det.codigo}</td>
                     <td>{det.cantidad}</td>
-                    <td>{det.detalle}</td>
+                    <td>{det.descripcion}</td>
                     <td>{formatCurrency(det.precio)}</td>                    
                     <td>{det.impuesto ? 'Si' : 'No'}</td>
                     <td>{formatCurrency(det.cantidad * det.precio * (det.impuesto ? 1.21 : 1))}</td>                    
@@ -269,20 +192,109 @@ export default function Home() {
               })}             
             </tbody>
           </table>
+          : null }
           
           <div className="flex justify-end">
-            <h3 className="font-bold text-white bg-slate-800 rounded-xl py-3 px-6 max-w-[25%] text-center">Total: {formatCurrency(total)}</h3>
+          <TotalShowcase
+            value={sumaTotal(detalle)}
+          />
           </div>
-          
+        </form>
+
+
+        {/* FORMULARIO DATOS CLIENTE */}
+
+        <form onSubmit={handleSubmit((data) => {                
+          agregarCliente(data)   
+        })} className="flex flex-col bg-gray-300 rounded-2xl px-3 py-3 w-full">
+          <div className="mb-2 p-2">
+            {/* RAZON SOCIAL */}
+            <label className="text-gray-800 text-md font-bold" htmlFor="nombre">
+              Razón Social:
+            </label>
+            <input
+              id="razon-social"
+              type="text"
+              className="block w-full px-2 py-1 bg-gray-100 rounded-lg"
+              placeholder="Razón social del cliente"
+              {...register('razon')}
+            />
+          </div>
+
+          {/* FECHA */}
+          <div className="mb-2 p-2">
+            <label className="text-gray-800 text-md font-bold" htmlFor="nombre">
+              Fecha:
+            </label>
+            <input
+              id="date"
+              type="date"
+              className="block w-full px-2 py-1 bg-gray-100 rounded-lg"
+              placeholder="Fecha"
+              {...register('fecha')}
+            />
+          </div>
+
+          {/* METODO DE PAGO */}
+          <div className="mb-2 p-2">
+            <label className="text-gray-800 text-md font-bold" htmlFor="nombre">
+              Método de pago:
+            </label>
+            <input
+              id="metodo"
+              type="text"
+              className="block w-full px-2 py-1 bg-gray-100 rounded-lg"
+              placeholder="Método de pago"
+              {...register('metodo')}
+            />
+          </div>
+
+           {/* ENVIO */}
+           <div className="mb-2 p-2">
+            <label className="text-gray-800 text-md font-bold" htmlFor="nombre">
+              Envío
+            </label>
+            <input
+              id="envio"
+              type="checkbox"
+              className="mx-2 px-2 py-1 bg-gray-100 rounded-lg"
+              {...register('envio')}
+              onChange={handleChange}
+            />
+          </div>
+
+          {/* COSTO DE ENVIO */}
+          {envio ? (
+            <div className="mb-2 p-2">
+              <label
+                className="text-gray-800 text-md font-bold"
+                htmlFor="nombre"
+              >
+                Costo de envío
+              </label>
+              <input
+                id="costo"
+                type="number"
+                className="block w-full px-2 py-1 bg-gray-100 rounded-lg"
+                placeholder="Costo de envío"
+                {...register('costo')}
+              />
+            </div>
+          ) : null}
 
           <hr className="my-2" />
 
+          <div className="flex justify-center">
           <input
-            type="submit"
-            className=" rounded-md my-4 w-full bg-red-800 p-3 uppercase font-bold text-white text-lg hover:bg-slate-800"
-            value="Finalizar Presupuesto"
-          />
-        </div>
+            type="submit"            
+            className=" max-w-[40%] rounded-md w-full bg-slate-800 p-3 uppercase font-bold text-white text-lg hover:bg-slate-600"
+            value="Confirmar datos del cliente"
+          />   
+          </div>       
+        </form>
+        <button onClick={ postPresupuesto } className=" rounded-md my-4 w-full bg-red-800 p-3 uppercase font-bold text-white text-lg hover:bg-slate-800">
+          Finalizar Presupuesto
+        </button>        
       </div>
     </main>
   );
