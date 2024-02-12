@@ -1,24 +1,37 @@
-
+'use client';
+import { useForm } from "react-hook-form";
+import { toastTrigger } from "@/app/helpers";
 
 export default function Home() {
     
+    const { register, handleSubmit, reset } = useForm(); 
+
+    const guardarCliente = (data) => {
+        console.log(data)
+        toastTrigger('success', 'Cliente agregado a base de datos');  
+        reset();
+    }
+
   
   return (
     <main className="min-h-[100dvh] p-6">
       <h1 className="font-bold text-2xl">Nuevo Cliente</h1>
       <div className="flex justify-center items-center min-h-[90dvh]">
-        <form className="flex flex-col gap-3 bg-white rounded-2xl px-4 py-8 w-[50%]">
+        <form onSubmit={handleSubmit((data) => {                    
+          guardarCliente(data)
+        })}
+        className="flex flex-col gap-3 bg-white rounded-2xl px-4 py-8 w-[50%]">
                 <div className="mb-4">
                     <label
                         className="text-gray-800"
                         htmlFor="nombre"
                     >Razón Social:</label>
                     <input 
-                        id="razon-social"
+                        id="razon"
                         type="text"
                         className="mt-2 block w-full p-3 bg-gray-50"
                         placeholder="Razón social del Cliente"
-                        name="razon-social"
+                        {...register('razon')}
                     />
                 </div>
                 <div className="mb-4">
@@ -31,7 +44,7 @@ export default function Home() {
                         type="number"
                         className="mt-2 block w-full p-3 bg-gray-50"
                         placeholder="Cuit del Cliente"
-                        name="cuit"                    
+                        {...register('cuit')}               
                     />
                 </div>
 
@@ -45,7 +58,7 @@ export default function Home() {
                         type="text"
                         className="mt-2 block w-full p-3 bg-gray-50"
                         placeholder="Dirección del cliente"
-                        name="direccion"
+                        {...register('direccion')}
                     />
                 </div>
 
@@ -59,7 +72,7 @@ export default function Home() {
                         type="email"
                         className="mt-2 block w-full p-3 bg-gray-50"
                         placeholder="Email del Cliente"
-                        name="email"                    
+                        {...register('email')}                
                     />
                 </div>
 
@@ -73,7 +86,7 @@ export default function Home() {
                         type="tel"
                         className="mt-2 block w-full p-3 bg-gray-50"
                         placeholder="Teléfono del Cliente"
-                        name="telefono"                    
+                        {...register('telefono')}                   
                     />
                 </div>
                 

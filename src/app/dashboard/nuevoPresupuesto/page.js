@@ -27,15 +27,15 @@ export default function Home() {
       envio: data.envio,
       costo: data.costo,      
     });
-    toastTrigger('success', 'Cliente confirmado');    
+    toastTrigger('success', 'Cliente confirmado, puede finalizar el presupuesto');    
   }
 
-  const postPresupuesto = () => {
+  const postPresupuesto = () => {1
     const presup = {
       ...cliente, 
         detalle: detalle              
     }
-    console.log(presup)
+    console.log(presup)    
   }
 
   const handleChange = () => {
