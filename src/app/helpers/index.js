@@ -15,7 +15,7 @@ export const dateFormat = date => {
     month: 'long',
     day: '2-digit'
   }
-  return newDate.toLocaleDateString('es-ES', options)  
+  return newDate.toLocaleDateString('es-AR', options)  
 }
 
 /* TOASTS */

@@ -10,12 +10,17 @@ import "./table.css";
 export default function Home() {
   const [envio, setEnvio] = useState(false);
   const [detalle, setDetalle] = useState([]);
+  const [total, setTotal] = useState(0);
   const [cliente, setCliente] = useState({});    
   const { register, handleSubmit, reset } = useForm();  
 
   const agregarItem = (item) => {        
     setDetalle([...detalle, item]);
     toastTrigger('success', 'Item agregado');
+    const subtotal = item.cantidad * item.precio
+    item.impuesto 
+    ? setTotal(total + (subtotal * 1.21))
+    : setTotal(total + subtotal)
     reset();  
   }
 
@@ -185,8 +190,7 @@ export default function Home() {
                       <td className="flex gap-1 justify-center">
                         <p onClick={handleEdit} className="font-semibold bg-yellow-300 py-[1px] px-1 rounded-lg hover:cursor-pointer hover:text-white">Editar</p>                         
                         <p onClick={handleDelete} className="font-semibold bg-red-500 py-[1px] px-1 rounded-lg hover:cursor-pointer hover:text-white">Borrar</p>
-                      </td>
-                    
+                      </td>                    
                   </tr> 
                 )
               })}             
@@ -196,7 +200,7 @@ export default function Home() {
           
           <div className="flex justify-end">
           <TotalShowcase
-            value={sumaTotal(detalle)}
+            value={total}
           />
           </div>
         </form>
