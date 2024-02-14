@@ -1,125 +1,140 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatCurrency, sumaTotal, toastTrigger } from "@/app/helpers";
 import { useForm } from "react-hook-form";
 import TotalShowcase from "@/app/components/TotalShowcase";
 import "./table.css";
 
-
-export default function Home() {
+export default function Home() {  
   const [envio, setEnvio] = useState(false);
   const [detalle, setDetalle] = useState([]);
   const [total, setTotal] = useState(0);
-  const [cliente, setCliente] = useState({});    
-  const { register, handleSubmit, reset } = useForm();  
+  const [cliente, setCliente] = useState({});
+  const [finalizar, setFinalizar] = useState(0);
+  const { register, handleSubmit, reset } = useForm();
 
-  const agregarItem = (item) => {        
-    setDetalle([...detalle, item]);
-    toastTrigger('success', 'Item agregado');
-    const subtotal = item.cantidad * item.precio
-    item.impuesto 
-    ? setTotal(total + (subtotal * 1.21))
-    : setTotal(total + subtotal)
-    reset();  
-  }
+  useEffect(() => {
+    let sum = 0;
+    detalle.forEach((item) => {
+      sum += item.total;
+      console.log("Suma1: ", sum);
+    });
+    console.log("Suma2: ", sum);
+    setTotal(sum);
+  }, [detalle]);
 
-  const agregarCliente = (data) => {             
+  const agregarItem = (item) => {
+    setDetalle([
+      ...detalle,
+      {
+        codigo: item.codigo,
+        descripcion: item.descripcion,
+        cantidad: item.cantidad,
+        precio: item.precio,
+        impuesto: item.impuesto,
+        total: item.impuesto
+          ? item.cantidad * item.precio * 1.21
+          : item.cantidad * item.precio,
+      },
+    ]);
+    toastTrigger("success", "Item agregado");
+
+    reset();
+  };
+
+  const agregarCliente = (data) => {
+
+    if (detalle.length === 0) {
+      toastTrigger("error", "Antes de confirmar el cliente, cargue los items.");
+    } else {
+
     setCliente({
       razonSocial: data.razon,
       fecha: data.fecha,
       metodo: data.metodo,
       envio: data.envio,
-      costo: data.costo,      
+      costo: data.costo,
     });
-    toastTrigger('success', 'Cliente confirmado, puede finalizar el presupuesto');    
-  }
+    toastTrigger(
+      "success",
+      "Cliente confirmado, exporte el presupuesto al final de la página"
+    );
+    setFinalizar(true);    
+  }};
 
-  const postPresupuesto = () => {1
+  const postPresupuesto = () => {
     const presup = {
-      ...cliente, 
-        detalle: detalle              
-    }
-    console.log(presup)    
-  }
+      ...cliente,
+      detalle: detalle,
+    };
+    console.log(presup);
+  };
 
   const handleChange = () => {
-    setEnvio(!envio);    
-  };  
-    
-  const handleEdit = () => {
-    console.log('Editando')
-  }
+    setEnvio(!envio);
+  };
 
-  const handleDelete = () => {
-    console.log('Borrando')
-  }
+  const handleDelete = (index) => {
+    setDetalle((detalleExistente) => {
+      return detalleExistente.filter((item, currIndex) => currIndex !== index);
+    });
+  };
 
   return (
-    <main className="min-h-[100dvh] p-6">
+    <main className="min-h-[100dvh] p-4">
       <h1 className="font-bold text-2xl">Nuevo Presupuesto</h1>
-      <div className="flex flex-col justify-center items-center min-h-[40dvh] max-w-[1024px] m-auto gap-10">        
-
-
+      <div className="flex flex-col justify-center items-center min-h-[40dvh] max-w-[1024px] m-auto gap-5">
         {/* FORMULARIO DETALLE DE PRODUCTOS Y SERVICIOS */}
 
-
-        <form onSubmit={handleSubmit((data) => {                    
-          agregarItem(data)
-        })} className="flex flex-col bg-gray-300 rounded-2xl px-3 py-3 w-full">          
-
+        <form
+          onSubmit={handleSubmit((data) => {
+            agregarItem(data);
+          })}
+          className="flex flex-col bg-gray-300 rounded-2xl px-2 py-3 w-full"
+        >
           {/* DETALLE */}
           <div>
-            <div className="mb-2 p-2">
-              <label
-                className="text-gray-800 text-md font-bold"                
-              >
+            <div className="mb-1 p-1">
+              <label className="text-gray-800 text-md font-bold">
                 Detalle de los items:
               </label>
             </div>
 
             <div className="mb-2 p-2">
-              <label
-                className="text-gray-800 text-md font-bold"                
-              >
-                Código:
-              </label>
+              <label className="text-gray-800 text-md font-bold">Código:</label>
               <input
                 id="codigo"
                 type="number"
-                className="mt-2 block w-full p-3 bg-gray-50"
+                className="mt-1 block w-full p-1 bg-gray-50"
                 placeholder="Código del producto"
-                {...register('codigo')}
+                {...register("codigo")}
               />
             </div>
 
             <div className="mb-2 p-2">
-              <label
-                className="text-gray-800 text-md font-bold"                
-              >
+              <label className="text-gray-800 text-md font-bold">
                 Detalle del item:
               </label>
               <input
                 id="descripcion"
-                type="textarea"
-                className="mt-2 block w-full p-3 bg-gray-50"
+                type="text"
+                className="mt-1 block w-full p-1 bg-gray-50"
                 placeholder="Ingrese descripcion del producto o servicio"
-                {...register('descripcion')}
+                {...register("descripcion")}
               />
             </div>
 
             <div className="mb-2 p-2">
-              <label
-                className="text-gray-800 text-md font-bold"                
-              >
+              <label className="text-gray-800 text-md font-bold">
                 Cantidad:
               </label>
               <input
                 id="cantidad"
                 type="number"
-                className="mt-2 block w-full p-3 bg-gray-50"
+                className="mt-1 block w-full p-1 bg-gray-50"
                 placeholder="Cantidad de items"
-                {...register('cantidad')}
+                {...register("cantidad")}
               />
             </div>
 
@@ -133,84 +148,93 @@ export default function Home() {
               <input
                 id="precio"
                 type="number"
-                className="mt-2 block w-full p-3 bg-gray-50"
+                className="mt-1 block w-full p-1 bg-gray-50"
                 placeholder="Precio individual"
-                {...register('precio')}
+                {...register("precio")}
               />
             </div>
 
             <div className="flex justify-between">
               <div className="mb-2 p-2 flex justify-center items-center">
-                <label
-                  className="text-gray-800 text-md font-bold"                  
-                >
+                <label className="text-gray-800 text-md font-bold">
                   Impuesto:
                 </label>
                 <input
                   id="impuesto"
                   type="checkbox"
                   className="mx-2"
-                  {...register('impuesto')}
+                  {...register("impuesto")}
                 />
               </div>
-              <button 
-                className=" max-w-[40%] rounded-md w-full bg-slate-800 p-3 uppercase font-bold text-white text-lg hover:bg-slate-600"
-                type='submit'>
-                  Agregar item
-              </button>                           
+              <button
+                className=" max-w-[30%] rounded-md w-full bg-slate-800 p-2 uppercase font-bold text-white text-lg hover:bg-slate-600"
+                type="submit"
+              >
+                Agregar item
+              </button>
             </div>
           </div>
 
           <hr className="my-2" />
 
-          {detalle ?
-          <table className="blueTable my-4">
-            <thead>
-              <tr>
-                <th>Codigo</th>
-                <th>Cantidad</th>
-                <th>Detalle</th>
-                <th>Precio</th>
-                <th>Impuesto</th>
-                <th>Total</th>
-                <th></th>
-              </tr>
-            </thead>
+          {detalle ? (
+            <table className="blueTable my-4">
+              <thead>
+                <tr>
+                  <th>Codigo</th>
+                  <th>Cantidad</th>
+                  <th>Detalle</th>
+                  <th>Precio</th>
+                  <th>Subtotal</th>
+                  <th>Impuesto</th>
+                  <th>Total</th>
+                  <th></th>
+                </tr>
+              </thead>
 
-            <tbody>
-              {detalle.map((det, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{det.codigo}</td>
-                    <td>{det.cantidad}</td>
-                    <td>{det.descripcion}</td>
-                    <td>{formatCurrency(det.precio)}</td>                    
-                    <td>{det.impuesto ? 'Si' : 'No'}</td>
-                    <td>{formatCurrency(det.cantidad * det.precio * (det.impuesto ? 1.21 : 1))}</td>                    
+              <tbody>
+                {detalle.map((det, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{det.codigo}</td>
+                      <td>{det.cantidad}</td>
+                      <td>{det.descripcion}</td>
+                      <td>{formatCurrency(det.precio)}</td>
+                      <td>{formatCurrency(det.cantidad * det.precio)}</td>
+                      <td>{det.impuesto ? "Si" : "No"}</td>
+                      <td>
+                        {formatCurrency(
+                          det.cantidad * det.precio * (det.impuesto ? 1.21 : 1)
+                        )}
+                      </td>
                       <td className="flex gap-1 justify-center">
-                        <p onClick={handleEdit} className="font-semibold bg-yellow-300 py-[1px] px-1 rounded-lg hover:cursor-pointer hover:text-white">Editar</p>                         
-                        <p onClick={handleDelete} className="font-semibold bg-red-500 py-[1px] px-1 rounded-lg hover:cursor-pointer hover:text-white">Borrar</p>
-                      </td>                    
-                  </tr> 
-                )
-              })}             
-            </tbody>
-          </table>
-          : null }
-          
+                        <button
+                          onClick={() => handleDelete(index)}
+                          className="font-semibold bg-red-500 py-[1px] px-1 rounded-lg hover:cursor-pointer hover:text-white"
+                        >
+                          Borrar
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          ) : null}
+
           <div className="flex justify-end">
-          <TotalShowcase
-            value={total}
-          />
+            <TotalShowcase value={total} />
           </div>
         </form>
 
-
         {/* FORMULARIO DATOS CLIENTE */}
 
-        <form onSubmit={handleSubmit((data) => {                
-          agregarCliente(data)   
-        })} className="flex flex-col bg-gray-300 rounded-2xl px-3 py-3 w-full">
+        <form
+          onSubmit={handleSubmit((data) => {
+            agregarCliente(data);
+          })}
+          className="flex flex-col bg-gray-300 rounded-2xl px-3 py-3 w-full"
+        >
           <div className="mb-2 p-2">
             {/* RAZON SOCIAL */}
             <label className="text-gray-800 text-md font-bold" htmlFor="nombre">
@@ -221,7 +245,7 @@ export default function Home() {
               type="text"
               className="block w-full px-2 py-1 bg-gray-100 rounded-lg"
               placeholder="Razón social del cliente"
-              {...register('razon')}
+              {...register("razon")}
             />
           </div>
 
@@ -235,7 +259,7 @@ export default function Home() {
               type="date"
               className="block w-full px-2 py-1 bg-gray-100 rounded-lg"
               placeholder="Fecha"
-              {...register('fecha')}
+              {...register("fecha")}
             />
           </div>
 
@@ -249,12 +273,12 @@ export default function Home() {
               type="text"
               className="block w-full px-2 py-1 bg-gray-100 rounded-lg"
               placeholder="Método de pago"
-              {...register('metodo')}
+              {...register("metodo")}
             />
           </div>
 
-           {/* ENVIO */}
-           <div className="mb-2 p-2">
+          {/* ENVIO */}
+          <div className="mb-2 p-2">
             <label className="text-gray-800 text-md font-bold" htmlFor="nombre">
               Envío
             </label>
@@ -262,7 +286,7 @@ export default function Home() {
               id="envio"
               type="checkbox"
               className="mx-2 px-2 py-1 bg-gray-100 rounded-lg"
-              {...register('envio')}
+              {...register("envio")}
               onChange={handleChange}
             />
           </div>
@@ -281,7 +305,7 @@ export default function Home() {
                 type="number"
                 className="block w-full px-2 py-1 bg-gray-100 rounded-lg"
                 placeholder="Costo de envío"
-                {...register('costo')}
+                {...register("costo")}
               />
             </div>
           ) : null}
@@ -289,16 +313,21 @@ export default function Home() {
           <hr className="my-2" />
 
           <div className="flex justify-center">
-          <input
-            type="submit"            
-            className=" max-w-[40%] rounded-md w-full bg-slate-800 p-3 uppercase font-bold text-white text-lg hover:bg-slate-600"
-            value="Confirmar datos del cliente"
-          />   
-          </div>       
+            <input
+              type="submit"
+              className=" max-w-[40%] rounded-md w-full bg-slate-800 p-3 uppercase font-bold text-white text-lg hover:bg-slate-600"
+              value="Confirmar datos del cliente"
+            />
+          </div>
         </form>
-        <button onClick={ postPresupuesto } className=" rounded-md my-4 w-full bg-red-800 p-3 uppercase font-bold text-white text-lg hover:bg-slate-800">
-          Finalizar Presupuesto
-        </button>        
+        {finalizar ? (
+          <button
+            onClick={postPresupuesto}
+            className=" rounded-md w-full bg-red-800 p-3 uppercase font-bold text-white text-lg hover:bg-slate-800"            
+          >
+            Exportar Presupuesto
+          </button>
+        ) : null}
       </div>
     </main>
   );
