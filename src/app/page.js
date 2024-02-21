@@ -1,12 +1,11 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { getData } from "./components/Services";
-
+import Test from "./components/Test";
 
 
 // admin: info@zingueriaadaro.com.ar
 // pss: zingueria1695Adaro
-
 
 export default function Home() {
   const { register, handleSubmit, reset } = useForm(); 
@@ -32,13 +31,13 @@ export default function Home() {
             className="rounded px-1 w-full"
             {...register('username')}
             placeholder="Usuario"
-            autocomplete="user"
+            autoComplete="user"
           />
           <input
             className="rounded px-1 w-full"
             {...register('password')}
             placeholder="Contraseña"
-            autocomplete="new-password"
+            autoComplete="new-password"
           />
           <label htmlFor="">
           info@zingueriaadaro.com.ar            
@@ -60,7 +59,7 @@ export default function Home() {
             Olvidaste la contraseña?
           </button>
         </div>
-      </form>
+      </form>            
     </main>
   );
 }
