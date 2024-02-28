@@ -1,7 +1,23 @@
+'use client'
+
 import "./pdfgen.css";
 import { formatCurrency } from "../helpers";
+import { useState, useEffect } from "react";
 
-export default function PdfGen( { pres } ) {    
+export default function PdfGen( { pres } ) {   
+
+  const [totalSum, setTotalSum] = useState(0);
+  console.log(pres)
+  
+  function sumaTotal() {
+    const list = pres.detalle
+    let totalCount = list.reduce((s, x) => s + parseInt(x.total), 0);
+    setTotalSum(totalCount)    
+  }
+
+  useEffect(() => {
+    sumaTotal();      
+  }, [])
     
   return (
     <div id="mainTable" className="bg-gray-300 max-w-[900px] w-full m-auto p-2 flex flex-col">
@@ -70,18 +86,24 @@ export default function PdfGen( { pres } ) {
                 <th>Codigo</th>
                 <th>Detalle</th>
                 <th>Precio</th>
-                <th>Impuesto</th>
+                <th>Cantidad</th>
+                <th>Imp %</th>
                 <th>Total</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>101</td>
-                <td>CANALETA ACERO INOXIDABLE</td>
-                <td>$15.000</td>
-                <td>$5.200</td>
-                <td>$20.200</td>
-              </tr>              
+            {pres.detalle.map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{item.codigo}</td>
+                      <td>{item.descripcion}</td>
+                      <td>{formatCurrency(item.precio)}</td>
+                      <td>{item.cantidad}</td>
+                      <td>{item.impuesto ? 'Si' : 'No'}</td>                      
+                      <td>{formatCurrency(item.total)}</td>                      
+                    </tr>
+                  );
+                })}        
             </tbody>
           </table>
         </div>
@@ -105,7 +127,7 @@ export default function PdfGen( { pres } ) {
         <div id="totales" className="div7 flex justify-between">
           <h4 className="font-bold">Total</h4>
           <h3 id="total" className="px-3 font-bold ">
-            {formatCurrency(pres.total)}
+            {formatCurrency(totalSum)}
           </h3>
         </div>
       </div>

@@ -1,8 +1,8 @@
 {
-    "presupuestos": [
-     {
+  "presupuestos": [
+    {
       "id": 1,
-      "razonSocial": "Los pollos hermanos",
+      "razonSocial": "Los Pollos Hermanos",
       "cuit": 30335038623,
       "fecha": "2024-02-12",
       "metodo": "Efectivo",
@@ -12,149 +12,126 @@
         {
           "codigo": "13",
           "descripcion": "Chapas Galvanizadas",
-          "cantidad": "30",
-          "precio": "3200",
-          "impuesto": false
+          "cantidad": "10",
+          "precio": 2200,
+          "impuesto": true,
+          "total": 26620
         },
         {
           "codigo": "14",
           "descripcion": "Chapas Translucidas verdes",
-          "cantidad": "12",
-          "precio": "3800",
-          "impuesto": false
+          "cantidad": "10",
+          "precio": 1800,
+          "impuesto": false,
+          "total": 18000
         },
         {
           "codigo": "1",
           "descripcion": "Mano de Obra",
           "cantidad": "1",
           "precio": "120000",
-          "impuesto": false
+          "impuesto": false,
+          "total": 120000
         },
         {
           "codigo": "4",
-          "descripcion": "Herrajes y Fierros de soldado",
+          "descripcion": "Herrajes de soldado",
           "cantidad": "1",
           "precio": "12000",
-          "impuesto": false
+          "impuesto": false,
+          "total": 12000
         }
       ]
     },
-      {
+    
+    {
       "id": 2,
-      "razonSocial": "Los pollos hermanos",
-      "cuit": 30335038623,
-      "fecha": "2024-02-12",
-      "metodo": "Efectivo",
-      "envio": false,
-      "total": 139000,
+      "razonSocial": "Tobias Funke",
+      "cuit": 30315028623,
+      "fecha": "2024-02-02",
+      "metodo": "Transferencia",
+      "envio": true,
+      "total": 9000,
       "detalle": [
         {
-          "codigo": "13",
-          "descripcion": "Chapas Galvanizadas",
-          "cantidad": "30",
-          "precio": "3200",
-          "impuesto": false
+          "codigo": "3",
+          "descripcion": "Ninjas",
+          "cantidad": "5",
+          "precio": "3000",
+          "impuesto": false,
+          "total": "13000"
         },
         {
-          "codigo": "14",
-          "descripcion": "Chapas Translucidas verdes",
-          "cantidad": "12",
-          "precio": "3800",
-          "impuesto": false
-        },
-        {
-          "codigo": "1",
-          "descripcion": "Mano de Obra",
-          "cantidad": "1",
-          "precio": "120000",
-          "impuesto": false
-        },
-        {
-          "codigo": "4",
-          "descripcion": "Herrajes y Fierros de soldado",
-          "cantidad": "1",
-          "precio": "12000",
-          "impuesto": false
+          "codigo": "31",
+          "descripcion": "Katana mango de nerca",
+          "cantidad": "5",
+          "precio": "800",
+          "impuesto": false,
+          "total": "4000"
         }
       ]
     },
-      {
+    {
       "id": 3,
-      "razonSocial": "Los pollos hermanos",
-      "cuit": 30335038623,
-      "fecha": "2024-02-12",
-      "metodo": "Efectivo",
-      "envio": false,
-      "total": 139000,
+      "razonSocial": "Creed Bratton",
+      "cuit": 30225028623,
+      "fecha": "2024-01-28",
+      "metodo": "Heladeras",
+      "envio": true,
+      "total": 12000,
       "detalle": [
         {
-          "codigo": "13",
-          "descripcion": "Chapas Galvanizadas",
-          "cantidad": "30",
-          "precio": "3200",
-          "impuesto": false
+          "codigo": "61",
+          "descripcion": "Sangre falsa",
+          "cantidad": "100",
+          "precio": "300",
+          "impuesto": false,
+          "total": "30000"
         },
         {
-          "codigo": "14",
-          "descripcion": "Chapas Translucidas verdes",
-          "cantidad": "12",
-          "precio": "3800",
-          "impuesto": false
-        },
-        {
-          "codigo": "1",
-          "descripcion": "Mano de Obra",
+          "codigo": "23",
+          "descripcion": "Careta de Steve Carell",
           "cantidad": "1",
-          "precio": "120000",
-          "impuesto": false
+          "precio": "1000",
+          "impuesto": false,
+          "total": "1000"
         },
         {
-          "codigo": "4",
-          "descripcion": "Herrajes y Fierros de soldado",
-          "cantidad": "1",
-          "precio": "12000",
-          "impuesto": false
+          "codigo": "21",
+          "descripcion": "Mini oreos",
+          "cantidad": "1000",
+          "precio": "500",
+          "impuesto": false,
+          "total": "500000"
         }
       ]
     },
-      {
+    {
       "id": 4,
-      "razonSocial": "Los pollos hermanos",
-      "cuit": 30335038623,
-      "fecha": "2024-02-12",
-      "metodo": "Efectivo",
-      "envio": false,
-      "total": 139000,
+      "razonSocial": "Ragnar Lothbrok",
+      "cuit": 30125028623,
+      "fecha": "2024-01-28",
+      "metodo": "Sangre",
+      "envio": true,
+      "total": 20000,
       "detalle": [
         {
-          "codigo": "13",
-          "descripcion": "Chapas Galvanizadas",
-          "cantidad": "30",
-          "precio": "3200",
-          "impuesto": false
+          "codigo": "19",
+          "descripcion": "Hachas Una Mano",
+          "cantidad": "1000",
+          "precio": "3000",
+          "impuesto": false,
+          "total": "3000000"
         },
         {
-          "codigo": "14",
-          "descripcion": "Chapas Translucidas verdes",
-          "cantidad": "12",
-          "precio": "3800",
-          "impuesto": false
-        },
-        {
-          "codigo": "1",
-          "descripcion": "Mano de Obra",
+          "codigo": "23",
+          "descripcion": "Corneta Vikinga",
           "cantidad": "1",
-          "precio": "120000",
-          "impuesto": false
-        },
-        {
-          "codigo": "4",
-          "descripcion": "Herrajes y Fierros de soldado",
-          "cantidad": "1",
-          "precio": "12000",
-          "impuesto": false
-        }
+          "precio": "1000",
+          "impuesto": false,
+          "total": "1000"
+        }        
       ]
     }
-    ]
-  }
+  ]
+}
