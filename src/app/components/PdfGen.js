@@ -6,8 +6,8 @@ import { useState, useEffect } from "react";
 
 export default function PdfGen( { pres } ) {   
 
-  const [totalSum, setTotalSum] = useState(0);
-  console.log(pres)
+  const [totalSum, setTotalSum] = useState(0);   
+  console.log('presupuesto:', pres) 
   
   function sumaTotal() {
     const list = pres.detalle
@@ -15,8 +15,8 @@ export default function PdfGen( { pres } ) {
     setTotalSum(totalCount)    
   }
 
-  useEffect(() => {
-    sumaTotal();      
+  useEffect(() => {    
+    // sumaTotal();      
   }, [])
     
   return (

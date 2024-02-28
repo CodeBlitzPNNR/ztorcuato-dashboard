@@ -1,6 +1,5 @@
-    "use client";
+    "use client";   
     
-    import Spinner from "../../components/Spinner"
     import clients from "../../clients";
     import { useState } from "react"
     import { formatCurrency } from "@/app/helpers";
@@ -205,9 +204,6 @@ const presupMock = [
       },
     ],
   },];
-
-      const clientes = clients
-      const [isLoading, setIsLoading] = useState(false);
     
       return (
         <main className="min-h-[100dvh] p-8">

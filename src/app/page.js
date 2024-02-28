@@ -1,8 +1,6 @@
-"use client";
+
 import { useForm } from "react-hook-form";
 import { getData } from "./components/Services";
-import Test from "./components/Test";
-
 
 // admin: info@zingueriaadaro.com.ar
 // pss: zingueria1695Adaro
@@ -57,7 +55,7 @@ export default function Home() {
             className="text-white bg-slate-500 py-1 px-2 w-full text-sm rounded text-center hover:bg-slate-400"            
           >
             Olvidaste la contraseña?
-          </button>
+          </button>          
         </div>
       </form>            
     </main>
