@@ -127,7 +127,7 @@ export default function PdfGen( { pres } ) {
         <div id="totales" className="div7 flex justify-between">
           <h4 className="font-bold">Total</h4>
           <h3 id="total" className="px-3 font-bold ">
-            {formatCurrency(totalSum)}
+            {formatCurrency(parseInt(pres.total))}
           </h3>
         </div>
       </div>

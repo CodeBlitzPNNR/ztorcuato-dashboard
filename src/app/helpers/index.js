@@ -1,3 +1,4 @@
+import { redirect, useRouter } from 'next/navigation'
 import Swal from 'sweetalert2'
 
 /* FORMATEADOR DE DIVISAS */
@@ -53,3 +54,14 @@ export const sumaTotal = (arr) => {
   }
   return suma;
 };
+
+
+/* TURBIEDAD PARA QUE FUNCIONE EL LOGIN */
+export const tokenValidation = ( session ) => {  
+
+  if (session) {
+    return true
+  } else {          
+    return false
+  }  
+}

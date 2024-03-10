@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { formatCurrency, sumaTotal, toastTrigger } from "@/app/helpers";
+import { formatCurrency, tokenValidation, toastTrigger } from "@/app/helpers";
 import { useForm } from "react-hook-form";
 import TotalShowcase from "@/app/components/TotalShowcase";
 import "./table.css";
+import axios from "axios";
 
 export default function Home() {  
   const [envio, setEnvio] = useState(false);
@@ -13,6 +14,7 @@ export default function Home() {
   const [cliente, setCliente] = useState({});
   const [finalizar, setFinalizar] = useState(0);
   const { register, handleSubmit, reset } = useForm();
+  const showInfo = tokenValidation(true);
 
   useEffect(() => {
     let sum = 0;
@@ -68,7 +70,8 @@ export default function Home() {
       ...cliente,
       detalle: detalle,
     };
-    console.log(presup);
+    console.log(JSON.stringify(presup));
+    postData(presup)
   };
 
   const handleChange = () => {
@@ -81,7 +84,20 @@ export default function Home() {
     });
   };
 
-  return (
+  async function postData( presupuesto ) {    
+    axios.post('https://api-zingueria-adaro-cp.vercel.app/api/presupuestos/', presupuesto)
+    .then(function (response) {
+      console.log('Presupuesto:', presupuesto);
+      console.log('Respuesta:', response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  
+
+  return showInfo ? (
     <main className="min-h-[100dvh] p-4">
       <h1 className="font-bold text-2xl">Nuevo Presupuesto</h1>
       <div className="flex flex-col justify-center items-center min-h-[40dvh] max-w-[1024px] m-auto gap-5">
@@ -330,5 +346,14 @@ export default function Home() {
         ) : null}
       </div>
     </main>
+  )
+  : (
+    <div className="w-full h-full flex justify-center items-center">
+      <div className="bg-slate-300 p-11 rounded-xl items-center flex flex-col gap-4">
+        <h6>Las credenciales no son válidas o caducaron.</h6>
+        <a href="/" className="bg-slate-700 text-white py-2 px-4 rounded-xl">Volver al login</a>
+        </div>      
+      
+    </div>
   );
 }

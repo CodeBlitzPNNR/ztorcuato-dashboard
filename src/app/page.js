@@ -1,13 +1,14 @@
+"use client";
 
-import { useForm } from "react-hook-form";
+import { useForm } from 'react-hook-form'
 import { getData } from "./components/Services";
 
 // admin: info@zingueriaadaro.com.ar
 // pss: zingueria1695Adaro
 
 export default function Home() {
-  const { register, handleSubmit, reset } = useForm(); 
-  
+
+  const { register, handleSubmit, reset } = useForm();
 
   return (
     <main className="min-h-[100dvh] flex flex-col justify-center items-center bg-pri">
