@@ -32,7 +32,7 @@ export default function PresupuestoDetails({ pres }) {
                     <td>{item.razonSocial}</td>
                     <td>{item.cuit}</td>
                     <td>{item.fecha}</td>
-                    <td>{formatCurrency(item.total)}</td>
+                    <td>{formatCurrency(item.totalPresupuesto)}</td>
                     <td className="flex gap-1 justify-center">
                       <button className="font-semibold bg-emerald-300 py-[1px] px-4 rounded-lg hover:cursor-pointer hover:text-white" onClick={() => {handleClick(item.id)}}>
                         Ver

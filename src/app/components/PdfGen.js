@@ -16,7 +16,7 @@ export default function PdfGen( { pres } ) {
   }
 
   useEffect(() => {    
-    // sumaTotal();      
+    sumaTotal();      
   }, [])
     
   return (
@@ -65,7 +65,7 @@ export default function PdfGen( { pres } ) {
           </div>
           <div id="envioDetalle" className="envioDetalle">
             <p id="envio">Envio: {pres.envio ? 'Si' : 'No'}</p>
-            <p id="envioCosto">Costo de envío: {formatCurrency(8000)}</p>
+            <p className="font-black" id="envioCosto">Costo de envío: {formatCurrency(8000)}</p>
           </div>
         </div>
       </div>
@@ -115,7 +115,7 @@ export default function PdfGen( { pres } ) {
         <div id="footer" className="div6 text-sm">
           <p>
             Presupuesto valido por 7 (siete) dias a partir de la fecha de
-            emision
+            emisión
           </p>
           <p id="notas" className="font-bold">
             Notas:{" "}
@@ -127,7 +127,7 @@ export default function PdfGen( { pres } ) {
         <div id="totales" className="div7 flex justify-between">
           <h4 className="font-bold">Total</h4>
           <h3 id="total" className="px-3 font-bold ">
-            {formatCurrency(parseInt(pres.total))}
+            {formatCurrency(parseInt(pres.totalPresupuesto))}
           </h3>
         </div>
       </div>

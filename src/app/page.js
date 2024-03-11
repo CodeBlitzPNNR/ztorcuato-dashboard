@@ -1,23 +1,38 @@
 "use client";
 
 import { useForm } from 'react-hook-form'
-import { getData } from "./components/Services";
-
-// admin: info@zingueriaadaro.com.ar
-// pss: zingueria1695Adaro
+import { useRouter } from 'next/navigation';
+import { toastTrigger } from './helpers';
+import axios from "axios";
 
 export default function Home() {
 
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit } = useForm();
+  const router = useRouter()
+
+  async function postUserData(data) {
+    axios
+      .post(
+        "https://zingueria-login.vercel.app/api/session/",
+        data
+      )
+      .then(function (response) {
+        console.log("Data:", response);
+        console.log("Respuesta:", response.data.token, response.status);
+        const session = response.data.token
+        localStorage.setItem('sessionID', session)
+        response.status === 201 ? router.push('/dashboard') : toastTrigger('error', 'Ocurrió un error, intente nuevamente')
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
   return (
     <main className="min-h-[100dvh] flex flex-col justify-center items-center bg-pri">
       <form
         onSubmit={ handleSubmit((data) => {
-          console.log(data)
-          getData();
-
-                
+          postUserData(data)
         })}
         className="bg-slate-900 rounded-lg p-4 flex flex-col gap-8"
       >
@@ -37,14 +52,7 @@ export default function Home() {
             {...register('password')}
             placeholder="Contraseña"
             autoComplete="new-password"
-          />
-          <label htmlFor="">
-          info@zingueriaadaro.com.ar            
-          </label>
-
-          <label htmlFor="">
-          zingueria1695Adaro
-          </label>
+          />          
 
           <button
             className="text-white bg-slate-500 py-1 px-2 w-full text-sm rounded text-center hover:bg-slate-400"            

@@ -1,5 +1,7 @@
-import { redirect, useRouter } from 'next/navigation'
+'use client';
+
 import Swal from 'sweetalert2'
+import { jwtDecode } from "jwt-decode";
 
 /* FORMATEADOR DE DIVISAS */
 export const formatCurrency = (value) => {
@@ -56,12 +58,15 @@ export const sumaTotal = (arr) => {
 };
 
 
-/* TURBIEDAD PARA QUE FUNCIONE EL LOGIN */
-export const tokenValidation = ( session ) => {  
-
-  if (session) {
-    return true
-  } else {          
-    return false
-  }  
-}
+/* HOOK TURBIO PARA QUE FUNCIONE EL LOGIN */
+export const useAuth = () => {  
+    const token = localStorage.getItem("sessionID");        
+    const decodedToken = jwtDecode(token);    
+    let currentDate = new Date();
+    // JWT exp is in seconds
+    if (decodedToken.exp * 1000 < currentDate.getTime()) {
+        return false
+    } else {        
+        return true
+    }
+};

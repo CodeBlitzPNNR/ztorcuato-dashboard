@@ -1,4 +1,3 @@
-import { tokenValidation } from "@/app/helpers";
 import PresupuestoDetails from "@/app/components/PresupuestoDetails";
 import axios from "axios";
 
@@ -16,8 +15,7 @@ async function getData() {
   return response.data;
 }
 
-export default async function Home() {
-  const showInfo = tokenValidation(true);
+export default async function Home() {  
   const presupuestos = await getData();
 
   return (
@@ -44,23 +42,8 @@ export default async function Home() {
             Buscar
           </button>
         </form>
-      </div>
-
-      {showInfo ? (
-        <PresupuestoDetails pres={presupuestos} />
-      ) : (
-        <div className="w-full h-full flex justify-center items-center">
-          <div className="bg-slate-300 p-11 rounded-xl items-center flex flex-col gap-4">
-            <h6>Las credenciales no son válidas o caducaron.</h6>
-            <a
-              href="/"
-              className="bg-slate-700 text-white py-2 px-4 rounded-xl"
-            >
-              Volver al login
-            </a>
-          </div>
-        </div>
-      )}
+      </div>  
+        <PresupuestoDetails pres={presupuestos} />       
     </main>
   );
 }

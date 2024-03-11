@@ -1,20 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { formatCurrency, tokenValidation, toastTrigger } from "@/app/helpers";
+import { formatCurrency, useAuth, toastTrigger } from "@/app/helpers";
 import { useForm } from "react-hook-form";
 import TotalShowcase from "@/app/components/TotalShowcase";
 import "./table.css";
 import axios from "axios";
 
-export default function Home() {  
+export default function Home() {
   const [envio, setEnvio] = useState(false);
   const [detalle, setDetalle] = useState([]);
   const [total, setTotal] = useState(0);
   const [cliente, setCliente] = useState({});
   const [finalizar, setFinalizar] = useState(0);
   const { register, handleSubmit, reset } = useForm();
-  const showInfo = tokenValidation(true);
+  const showInfo = useAuth();
 
   useEffect(() => {
     let sum = 0;
@@ -46,24 +46,25 @@ export default function Home() {
   };
 
   const agregarCliente = (data) => {
-
     if (detalle.length === 0) {
       toastTrigger("error", "Antes de confirmar el cliente, cargue los items.");
     } else {
-
-    setCliente({
-      razonSocial: data.razon,
-      fecha: data.fecha,
-      metodo: data.metodo,
-      envio: data.envio,
-      costo: data.costo,
-    });
-    toastTrigger(
-      "success",
-      "Cliente confirmado, exporte el presupuesto al final de la página"
-    );
-    setFinalizar(true);    
-  }};
+      setCliente({
+        razonSocial: data.razon,
+        cuit: data.cuit,
+        fecha: data.fecha,
+        metodo: data.metodo,
+        envio: data.envio,
+        costo: data.costo,
+        totalPresupuesto: total 
+      });
+      toastTrigger(
+        "success",
+        "Cliente confirmado, exporte el presupuesto al final de la página"
+      );
+      setFinalizar(true);
+    }
+  };
 
   const postPresupuesto = () => {
     const presup = {
@@ -71,7 +72,8 @@ export default function Home() {
       detalle: detalle,
     };
     console.log(JSON.stringify(presup));
-    postData(presup)
+    postData(presup);
+    reset();
   };
 
   const handleChange = () => {
@@ -84,25 +86,26 @@ export default function Home() {
     });
   };
 
-  async function postData( presupuesto ) {    
-    axios.post('https://api-zingueria-adaro-cp.vercel.app/api/presupuestos/', presupuesto)
-    .then(function (response) {
-      console.log('Presupuesto:', presupuesto);
-      console.log('Respuesta:', response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+  async function postData(presupuesto) {
+    axios
+      .post(
+        "https://api-zingueria-adaro-cp.vercel.app/api/presupuestos/",
+        presupuesto
+      )
+      .then(function (response) {
+        console.log("Presupuesto:", presupuesto);
+        console.log("Respuesta:", response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
-
-  
 
   return showInfo ? (
     <main className="min-h-[100dvh] p-4">
       <h1 className="font-bold text-2xl">Nuevo Presupuesto</h1>
       <div className="flex flex-col justify-center items-center min-h-[40dvh] max-w-[1024px] m-auto gap-5">
         {/* FORMULARIO DETALLE DE PRODUCTOS Y SERVICIOS */}
-
         <form
           onSubmit={handleSubmit((data) => {
             agregarItem(data);
@@ -251,8 +254,8 @@ export default function Home() {
           })}
           className="flex flex-col bg-gray-300 rounded-2xl px-3 py-3 w-full"
         >
+          {/* RAZON SOCIAL */}
           <div className="mb-2 p-2">
-            {/* RAZON SOCIAL */}
             <label className="text-gray-800 text-md font-bold" htmlFor="nombre">
               Razón Social:
             </label>
@@ -262,6 +265,20 @@ export default function Home() {
               className="block w-full px-2 py-1 bg-gray-100 rounded-lg"
               placeholder="Razón social del cliente"
               {...register("razon")}
+            />
+          </div>
+
+          {/* CUIT */}
+          <div className="mb-2 p-2">
+            <label className="text-gray-800 text-md font-bold" htmlFor="nombre">
+              Cuit:
+            </label>
+            <input
+              id="cuit"
+              type="text"
+              className="block w-full px-2 py-1 bg-gray-100 rounded-lg"
+              placeholder="Cuit"
+              {...register("cuit")}
             />
           </div>
 
@@ -339,21 +356,21 @@ export default function Home() {
         {finalizar ? (
           <button
             onClick={postPresupuesto}
-            className=" rounded-md w-full bg-red-800 p-3 uppercase font-bold text-white text-lg hover:bg-slate-800"            
+            className=" rounded-md w-full bg-red-800 p-3 uppercase font-bold text-white text-lg hover:bg-slate-800"
           >
             Exportar Presupuesto
           </button>
         ) : null}
       </div>
     </main>
-  )
-  : (
+  ) : (
     <div className="w-full h-full flex justify-center items-center">
       <div className="bg-slate-300 p-11 rounded-xl items-center flex flex-col gap-4">
         <h6>Las credenciales no son válidas o caducaron.</h6>
-        <a href="/" className="bg-slate-700 text-white py-2 px-4 rounded-xl">Volver al login</a>
-        </div>      
-      
+        <a href="/" className="bg-slate-700 text-white py-2 px-4 rounded-xl">
+          Volver al login
+        </a>
+      </div>
     </div>
   );
 }
