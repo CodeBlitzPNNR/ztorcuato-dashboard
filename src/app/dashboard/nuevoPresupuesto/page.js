@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { formatCurrency, useAuth, toastTrigger } from "@/app/helpers";
 import { useForm } from "react-hook-form";
 import TotalShowcase from "@/app/components/TotalShowcase";
@@ -15,6 +16,7 @@ export default function Home() {
   const [finalizar, setFinalizar] = useState(0);
   const { register, handleSubmit, reset } = useForm();
   const showInfo = useAuth();
+  const router = useRouter(); 
 
   useEffect(() => {
     let sum = 0;
@@ -30,10 +32,10 @@ export default function Home() {
     setDetalle([
       ...detalle,
       {
-        codigo: item.codigo,
+        codigo: parseInt(item.codigo),
         descripcion: item.descripcion,
-        cantidad: item.cantidad,
-        precio: item.precio,
+        cantidad: parseInt(item.cantidad),
+        precio: parseFloat(item.precio),
         impuesto: item.impuesto,
         total: item.impuesto
           ? item.cantidad * item.precio * 1.21
@@ -41,7 +43,6 @@ export default function Home() {
       },
     ]);
     toastTrigger("success", "Item agregado");
-
     reset();
   };
 
@@ -51,12 +52,12 @@ export default function Home() {
     } else {
       setCliente({
         razonSocial: data.razon,
-        cuit: data.cuit,
+        cuit: parseInt(data.cuit),
         fecha: data.fecha,
         metodo: data.metodo,
         envio: data.envio,
-        costo: data.costo,
-        totalPresupuesto: total 
+        // costo: data.costo ? parseFloat(data.costo) : 0,
+        totalPresupuesto: total,
       });
       toastTrigger(
         "success",
@@ -73,7 +74,6 @@ export default function Home() {
     };
     console.log(JSON.stringify(presup));
     postData(presup);
-    reset();
   };
 
   const handleChange = () => {
@@ -95,9 +95,18 @@ export default function Home() {
       .then(function (response) {
         console.log("Presupuesto:", presupuesto);
         console.log("Respuesta:", response);
+        toastTrigger(
+          "success",
+          "Presupuesto agregado exitosamente, espere mientras es redireccionado."
+        );
+        // router.push('/dashboard/presupuestos/${response.itemid}');
       })
       .catch(function (error) {
         console.log(error);
+        toastTrigger(
+          "error",
+          "Hubo un error enviando el presupuesto, espere unos minutos e intente de nuevo o contacte a mantenimiento."
+        );
       });
   }
 
@@ -186,7 +195,7 @@ export default function Home() {
                 />
               </div>
               <button
-                className=" max-w-[30%] rounded-md w-full bg-slate-800 p-2 uppercase font-bold text-white text-lg hover:bg-slate-600"
+                className=" max-w-[30%] rounded-md w-full bg-slate-800 p-2 uppercase font-bold text-white text-xs md:text-lg hover:bg-slate-600"
                 type="submit"
               >
                 Agregar item
@@ -275,7 +284,7 @@ export default function Home() {
             </label>
             <input
               id="cuit"
-              type="text"
+              type="number"
               className="block w-full px-2 py-1 bg-gray-100 rounded-lg"
               placeholder="Cuit"
               {...register("cuit")}
@@ -348,15 +357,15 @@ export default function Home() {
           <div className="flex justify-center">
             <input
               type="submit"
-              className=" max-w-[40%] rounded-md w-full bg-slate-800 p-3 uppercase font-bold text-white text-lg hover:bg-slate-600"
-              value="Confirmar datos del cliente"
+              className=" max-w-[40%] rounded-md w-full bg-slate-800 p-3 uppercase font-bold text-white text-xs md:text-lg  hover:bg-slate-600"
+              value="Confirmar cliente"
             />
           </div>
         </form>
         {finalizar ? (
           <button
             onClick={postPresupuesto}
-            className=" rounded-md w-full bg-red-800 p-3 uppercase font-bold text-white text-lg hover:bg-slate-800"
+            className=" rounded-md w-full bg-red-800 p-3 uppercase font-bold text-white text-xs md:text-lg hover:bg-slate-800"
           >
             Exportar Presupuesto
           </button>

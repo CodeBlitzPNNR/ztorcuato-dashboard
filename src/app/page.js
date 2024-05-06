@@ -59,7 +59,7 @@ export default function Home() {
             type="submit"
           >            
             Ingresar
-          </button>
+          </button>          
           <button
             className="text-white bg-slate-500 py-1 px-2 w-full text-sm rounded text-center hover:bg-slate-400"            
           >

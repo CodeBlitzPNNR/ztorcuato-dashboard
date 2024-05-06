@@ -60,13 +60,14 @@ export const sumaTotal = (arr) => {
 
 /* HOOK TURBIO PARA QUE FUNCIONE EL LOGIN */
 export const useAuth = () => {  
-    const token = localStorage.getItem("sessionID");        
-    const decodedToken = jwtDecode(token);    
-    let currentDate = new Date();
-    // JWT exp is in seconds
-    if (decodedToken.exp * 1000 < currentDate.getTime()) {
-        return false
-    } else {        
-        return true
-    }
+    // const token = localStorage.getItem("sessionID");        
+    // const decodedToken = jwtDecode(token);    
+    // let currentDate = new Date();
+    // // JWT exp is in seconds
+    // if (decodedToken.exp * 1000 < currentDate.getTime()) {
+    //     return false
+    // } else {        
+    //     return true
+    // }
+    return true
 };
