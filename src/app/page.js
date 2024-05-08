@@ -7,10 +7,11 @@ import axios from "axios";
 
 export default function Home() {
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const router = useRouter()
 
   async function postUserData(data) {
+    console.log(data)
     axios
       .post(
         "https://zingueria-login.vercel.app/api/session/",
@@ -21,9 +22,11 @@ export default function Home() {
         console.log("Respuesta:", response.data.token, response.status);
         const session = response.data.token
         localStorage.setItem('sessionID', session)
-        response.status === 201 ? router.push('/dashboard') : toastTrigger('error', 'Ocurrió un error, intente nuevamente')
+        response.status === 201 ? router.push('/dashboard') : toastTrigger('error', 'Usuario no encontrado o incorrecto.')
       })
       .catch(function (error) {
+        reset();
+        toastTrigger('error', 'Usuario no encontrado o incorrecto.')
         console.log(error);
       });
   }
@@ -49,6 +52,7 @@ export default function Home() {
           />
           <input
             className="rounded px-1 w-full"
+            type='password'
             {...register('password')}
             placeholder="Contraseña"
             autoComplete="new-password"
