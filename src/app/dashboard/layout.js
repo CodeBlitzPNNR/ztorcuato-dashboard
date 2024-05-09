@@ -4,8 +4,11 @@ import SessionError from "../components/SessionError";
 import { useAuth } from "../helpers";
 
 export default function DashboardLayout({ children }) {
-  
-  const showInfo = useAuth();
+    const showInfo = useAuth();
+
+    const handleLogOut = () => {
+      localStorage.removeItem('sessionID')
+    }
 
   return (
     <>    
@@ -31,8 +34,9 @@ export default function DashboardLayout({ children }) {
         </div>
         <div className="flex justify-center">
           <a
+            onClick={() => handleLogOut()}
             className="font-semibold bg-slate-500 px-4 py-2 rounded-xl hover:bg-slate-300 text-xs md:text-lg"
-            href="https://codeblitzpnnr.github.io/zingueria-torcuato/index.html#"
+            href="/"
           >
             Salir del sistema
           </a>
