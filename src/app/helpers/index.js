@@ -5,12 +5,13 @@ import { jwtDecode } from "jwt-decode";
 
 /* FORMATEADOR DE DIVISAS */
 export const formatCurrency = (value) => {
-    return new Intl.NumberFormat('es-AR', {
-      style: 'currency',
-      currency: 'ARS' }).format(value)
-  }
+  return new Intl.NumberFormat('es-AR', {
+    style: 'currency',
+    currency: 'ARS'
+  }).format(value)
+}
 
-  /* FORMATEADOR DE FECHAS */
+/* FORMATEADOR DE FECHAS */
 export const dateFormat = date => {
   const newDate = new Date(date)
   const options = {
@@ -18,7 +19,7 @@ export const dateFormat = date => {
     month: 'long',
     day: '2-digit'
   }
-  return newDate.toLocaleDateString('es-AR', options)  
+  return newDate.toLocaleDateString('es-AR', options)
 }
 
 /* TOASTS */
@@ -36,16 +37,16 @@ const Toast = Swal.mixin({
 
 export const toastTrigger = (state, msg) => {
   state === 'error'
-  ?
-  Toast.fire({
-    icon: state,
-    title: msg
-  })
-  :
-  Toast.fire({
-    icon: state,
-    title: msg
-  })
+    ?
+    Toast.fire({
+      icon: state,
+      title: msg
+    })
+    :
+    Toast.fire({
+      icon: state,
+      title: msg
+    })
 }
 
 /* SUMA DE ARRAYS PARA TOTALES */
@@ -59,14 +60,14 @@ export const sumaTotal = (arr) => {
 
 
 /* HOOK TURBIO PARA QUE FUNCIONE EL LOGIN */
-export const useAuth = () => {  
-    const token = localStorage.getItem("sessionID");        
-    const decodedToken = jwtDecode(token);    
-    let currentDate = new Date();
-    // JWT exp is in seconds
-    if (decodedToken.exp * 1000 < currentDate.getTime()) {
-        return false
-    } else {        
-        return true
-    }
-};
+export const useAuth = () => {
+  // const token = localStorage.getItem("sessionID");
+  // const decodedToken = jwtDecode(token);
+  // let currentDate = new Date();
+  // // JWT exp is in seconds
+  // if (decodedToken.exp * 1000 < currentDate.getTime()) {
+  return true
+  //   } else {
+  //     return true
+  //   }
+}
