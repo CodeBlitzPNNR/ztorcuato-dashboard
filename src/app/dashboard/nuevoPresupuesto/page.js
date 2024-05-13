@@ -16,6 +16,7 @@ export default function Home() {
   const [finalizar, setFinalizar] = useState(0);
   const { register, handleSubmit, reset } = useForm();
   const showInfo = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     let sum = 0;
@@ -95,7 +96,7 @@ export default function Home() {
           "success",
           "Presupuesto agregado exitosamente, espere mientras es redireccionado."
         );
-        // router.push('/dashboard/presupuestos/${response.itemid}');
+        router.push(`/dashboard/presupuestos`);
       })
       .catch(function (error) {
         console.log(error);
