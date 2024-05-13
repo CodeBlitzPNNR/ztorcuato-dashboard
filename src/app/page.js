@@ -34,6 +34,7 @@ export default function Home() {
   return (
     <main className="min-h-[100dvh] flex flex-col justify-center items-center bg-pri">
       <form
+      method='post'
         onSubmit={ handleSubmit((data) => {
           postUserData(data)
         })}
