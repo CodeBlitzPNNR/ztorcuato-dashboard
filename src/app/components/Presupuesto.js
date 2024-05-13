@@ -10,8 +10,7 @@ async function getData( id ) {
     },
   }; 
 
-  const response = await axios(axiosConfig);
-  console.log("response: ", response.data); 
+  const response = await axios(axiosConfig);  
   return response.data 
 }
 

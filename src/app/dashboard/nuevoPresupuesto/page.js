@@ -16,7 +16,6 @@ export default function Home() {
   const [finalizar, setFinalizar] = useState(0);
   const { register, handleSubmit, reset } = useForm();
   const showInfo = useAuth();
-  const router = useRouter(); 
 
   useEffect(() => {
     let sum = 0;
@@ -36,10 +35,8 @@ export default function Home() {
         descripcion: item.descripcion,
         cantidad: parseInt(item.cantidad),
         precio: parseFloat(item.precio),
-        impuesto: item.impuesto,
-        total: item.impuesto
-          ? item.cantidad * item.precio * 1.21
-          : item.cantidad * item.precio,
+        impuesto: item.multiplo,
+        total: item.cantidad * item.precio * item.multiplo,
       },
     ]);
     toastTrigger("success", "Item agregado");
@@ -56,7 +53,6 @@ export default function Home() {
         fecha: data.fecha,
         metodo: data.metodo,
         envio: data.envio,
-        // costo: data.costo ? parseFloat(data.costo) : 0,
         totalPresupuesto: total,
       });
       toastTrigger(
@@ -184,16 +180,13 @@ export default function Home() {
 
             <div className="flex justify-between">
               <div className="mb-2 p-2 flex justify-center items-center">
-                <label className="text-gray-800 text-md font-bold">
-                  Impuesto:
-                </label>
-                <input
-                  id="impuesto"
-                  type="checkbox"
-                  className="mx-2"
-                  {...register("impuesto")}
-                />
+                <select {...register("multiplo", { required: true })}>
+                  <option value={1}>Sin impuesto...</option>
+                  <option value={1.21}>21%</option>
+                  <option value={1.105}>10.5%</option>
+                </select>                
               </div>
+
               <button
                 className=" max-w-[30%] rounded-md w-full bg-slate-800 p-2 uppercase font-bold text-white text-xs md:text-lg hover:bg-slate-600"
                 type="submit"
@@ -229,10 +222,10 @@ export default function Home() {
                       <td>{det.descripcion}</td>
                       <td>{formatCurrency(det.precio)}</td>
                       <td>{formatCurrency(det.cantidad * det.precio)}</td>
-                      <td>{det.impuesto ? "Si" : "No"}</td>
+                      <td>{det.impuesto>1 ? det.impuesto  : 'No'}</td>
                       <td>
                         {formatCurrency(
-                          det.cantidad * det.precio * (det.impuesto ? 1.21 : 1)
+                          det.cantidad * det.precio * det.impuesto
                         )}
                       </td>
                       <td className="flex gap-1 justify-center">

@@ -4,7 +4,6 @@ import PresupuestoDetails from "@/app/components/PresupuestoDetails";
 import Spinner from "@/app/components/Spinner";
 import { useForm } from "react-hook-form";
 import { toastTrigger } from '../../helpers';
-import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 export default function Home() {
@@ -16,7 +15,7 @@ export default function Home() {
     try {      
       setLoading(true);
       const response = await axios.get(
-        "https://api-zingueria-adaro-cp.vercel.app/api/presupuestos?limit=15"
+        "https://api-zingueria-adaro-cp.vercel.app/api/presupuestos"
       );            
       setPresupuestos(response.data.baseDatos);
       setLoading(false);
