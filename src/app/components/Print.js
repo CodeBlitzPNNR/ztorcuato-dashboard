@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Print = ({ children }) => {
+const Print = ({ children, name }) => {
 
   const imprimir = () => {
     const html2pdf = require('html2pdf.js');
@@ -8,7 +8,7 @@ const Print = ({ children }) => {
 
     const opt = {
       margin: [0, 0],
-      filename: `Presupuesto.pdf`,
+      filename: `Presupuesto-${name}.pdf`,
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: 2 },
       jsPDF: { unit: 'em', format: 'a4', orientation: 'portrait' }

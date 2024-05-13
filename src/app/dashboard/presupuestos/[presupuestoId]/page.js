@@ -7,19 +7,16 @@ import Print from '@/app/components/Print'
 
 export default function presupuestoInfo({ params }) {
 
-  const showInfo = true
+  const showInfo = useAuth();  
 
   return (
     <div>
       {showInfo ?
         (<section className="p-3">
           <h1 className="font-bold text-xl">PRESUPUESTO N° {params.presupuestoId}</h1>
-          <Print>
+          <Print name={params.presupuestoId}>
             <Presupuesto params={params.presupuestoId} />
-          </Print >
-          {/* <div className="flex justify-center mt-4">
-            <button className="px-4 py-2 bg-emerald-700 text-white font-bold rounded-lg hover:bg-emerald-400">CREAR PDF</button>
-          </div> */}
+          </Print >          
         </section>
         ) : (
           <div className="w-full h-full flex justify-center items-center">
