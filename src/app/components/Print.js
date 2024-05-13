@@ -13,17 +13,16 @@ const Print = ({ children }) => {
       html2canvas: { scale: 2 },
       jsPDF: { unit: 'em', format: 'a4', orientation: 'portrait' }
     };
-
     html2pdf().from(content).set(opt).save();
-
   }
 
 
   return (
     <>
       <div id="imprimir">{children}</div>
-      <button onClick={() => { imprimir() }}> click</button>
-
+      <div className='container flex justify-center mt-4'>
+      <button className='px-2 py-1 font-semibold text-white bg-emerald-500 rounded-lg' onClick={() => { imprimir() }}>CREAR PDF</button>
+      </div>
     </>
   )
 }
