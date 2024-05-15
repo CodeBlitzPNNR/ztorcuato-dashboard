@@ -1,25 +1,26 @@
-'use client';
+"use client";
 
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import { jwtDecode } from "jwt-decode";
 
 /* FORMATEADOR DE DIVISAS */
 export const formatCurrency = (value) => {
-    return new Intl.NumberFormat('es-AR', {
-      style: 'currency',
-      currency: 'ARS' }).format(value)
-  }
+  return new Intl.NumberFormat("es-AR", {
+    style: "currency",
+    currency: "ARS",
+  }).format(value);
+};
 
-  /* FORMATEADOR DE FECHAS */
-export const dateFormat = date => {
-  const newDate = new Date(date)
+/* FORMATEADOR DE FECHAS */
+export const dateFormat = (date) => {
+  const newDate = new Date(date);
   const options = {
-    year: 'numeric',
-    month: 'long',
-    day: '2-digit'
-  }
-  return newDate.toLocaleDateString('es-AR', options)  
-}
+    year: "numeric",
+    month: "long",
+    day: "2-digit",
+  };
+  return newDate.toLocaleDateString("es-AR", options);
+};
 
 /* TOASTS */
 const Toast = Swal.mixin({
@@ -31,22 +32,20 @@ const Toast = Swal.mixin({
   didOpen: (toast) => {
     toast.onmouseenter = Swal.stopTimer;
     toast.onmouseleave = Swal.resumeTimer;
-  }
+  },
 });
 
 export const toastTrigger = (state, msg) => {
-  state === 'error'
-  ?
-  Toast.fire({
-    icon: state,
-    title: msg
-  })
-  :
-  Toast.fire({
-    icon: state,
-    title: msg
-  })
-}
+  state === "error"
+    ? Toast.fire({
+        icon: state,
+        title: msg,
+      })
+    : Toast.fire({
+        icon: state,
+        title: msg,
+      });
+};
 
 /* SUMA DE ARRAYS PARA TOTALES */
 export const sumaTotal = (arr) => {
@@ -57,16 +56,20 @@ export const sumaTotal = (arr) => {
   return suma;
 };
 
-
 /* HOOK TURBIO PARA QUE FUNCIONE EL LOGIN */
-export const useAuth = () => {  
-    const token = localStorage.getItem("sessionID");        
-    const decodedToken = jwtDecode(token);    
+export const useAuth = () => {
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("sessionID") : false;
+  if (token === false) {
+    return false;
+  } else {
+    const decodedToken = jwtDecode(token);
     let currentDate = new Date();
     // JWT exp is in seconds
-    if (decodedToken.exp * 10000 < currentDate.getTime()) {
-        return false
-    } else {        
-        return true
-    }    
+    if (decodedToken.exp * 10800000 < currentDate.getTime()) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 };
