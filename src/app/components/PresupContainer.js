@@ -2,7 +2,7 @@
 import { useAuth } from "../helpers";
 import SessionError from "./SessionError";
 
-export default function presupuestoContainer( children ) {
+export default function PresupContainer( children ) {
   const showInfo = useAuth();
 
   return <>{showInfo ? 
@@ -10,6 +10,6 @@ export default function presupuestoContainer( children ) {
     { children } 
   </> : 
   <>
-    <SessionError text={'Salio todo como el orto.'}/>
+    <SessionError text={'Algo salio mal.'}/>
   </>}</>;
 }
