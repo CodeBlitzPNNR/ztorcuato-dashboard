@@ -141,10 +141,9 @@ export default function Home() {
               <label className="text-gray-800 text-md font-bold">
                 Detalle del item:
               </label>
-              <input
-                id="descripcion"
-                type="text"
-                className="mt-1 block w-full p-1 bg-gray-50"
+              <textarea                            
+                id="descripcion"                              
+                className="mt-1 block w-full p-1 bg-gray-50 resize-none h-40"   
                 placeholder="Ingrese descripcion del producto o servicio"
                 {...register("descripcion")}
               />
@@ -218,13 +217,13 @@ export default function Home() {
                 {detalle.map((det, index) => {
                   return (
                     <tr key={index}>
-                      <td>{det.codigo}</td>
-                      <td>{det.cantidad}</td>
-                      <td>{det.descripcion}</td>
-                      <td>{formatCurrency(det.precio)}</td>
-                      <td>{formatCurrency(det.cantidad * det.precio)}</td>
-                      <td>{det.impuesto>1 ? det.impuesto  : 'No'}</td>
-                      <td>
+                      <td className="text-left">{det.codigo}</td>
+                      <td className="text-left">{det.cantidad}</td>
+                      <td className="text-left">{det.descripcion}</td>
+                      <td className="text-left">{formatCurrency(det.precio)}</td>
+                      <td className="text-left">{formatCurrency(det.cantidad * det.precio)}</td>
+                      <td className="text-left">{det.impuesto>1 ? det.impuesto  : 'No'}</td>
+                      <td className="text-left">
                         {formatCurrency(
                           det.cantidad * det.precio * det.impuesto
                         )}
