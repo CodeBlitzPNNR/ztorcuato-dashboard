@@ -6,10 +6,15 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import "./table2.css";
 
-export default function PresupuestoDetails({ pres }) {
+export default function PresupuestoDetails({ pres }) {  
+  const presupuesto = pres
   const router = useRouter();
   const handleClick = (id) => {
-    router.push(`/dashboard/presupuestos/${id}`);
+    if (presupuesto.tipo){
+      router.push(`/dashboard/presupuestos/simp/${id}`);
+    } else {
+      router.push(`/dashboard/presupuestos/${id}`);
+    }
   };
 
   const handleDelete = (id) => {

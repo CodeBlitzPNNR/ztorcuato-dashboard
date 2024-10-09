@@ -29,6 +29,7 @@ export default function Home() {
   }, [detalle]);
 
   const agregarItem = (item) => {
+    console.log(item)
     setDetalle([
       ...detalle,
       {
@@ -86,7 +87,8 @@ export default function Home() {
   async function postData(presupuesto) {
     axios
       .post(
-        "https://api-zingueria-adaro-cp.vercel.app/api/presupuestos/",
+        // "https://api-zingueria-adaro-cp.vercel.app/api/presupuestos/",
+        "https://pruebas-zingueria-adaro.vercel.app/api/presupuestos/",
         presupuesto
       )
       .then(function (response) {

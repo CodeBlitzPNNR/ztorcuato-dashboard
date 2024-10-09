@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>PDF Generator</title>
+</head>
+<body>
+    <section class="sectionPresupuesto">
+        <div id="mainTable" class="mainTable">
+            <div class="parent">
+                <div id="Dia" class="div1"> 
+                    <h2 id="fecha">1 de Febrero 2024</h2>
+                    <h3>Presupuesto nº</h3>
+                    <h3 id="nPresupuesto">1</h3>
+                </div>
+                <div id="vendedor" class="div2">
+                    <p>Vendedor</p>
+                    <h3>Hernan Adaro</h3>
+                    <div id="detallePago" class="detallePago">
+                        <p>Metodo de Pago:</p>
+                        <p id="metodoPago">
+                        Contado
+                        </p>
+                    </div>
+                </div>
+                <div id="cliente" class="div3">
+                    <p>Razon Social</p> 
+                    <h2 id="razonSocial">
+                        SALADIX
+                    </h2>
+                    
+                    <div id="envioDetalle" class="envioDetalle">
+                        <p id="envio">Envio: Si</p>
+                        <p id="envioCosto">Costo: $15000</p>
+                    </div>
+                </div>
+                <div id="espacio" class="div4"> 
+                    <h2>Presupuesto</h2>
+                </div>
+                <div id="detalle" class="div5"> 
+                    <table>
+                        <!-- Encabezado de la tabla -->
+                        <thead>
+                            <tr>
+                                <th>Codigo</th>
+                                <th>Detalle</th>
+                                <th>Precio</th>
+                                <th>Impuesto</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <!-- Cuerpo de la tabla -->
+                        <tbody>
+                            <!-- Fila 1 -->
+                            <tr>
+                                <td>101</td>
+                                <td>CANALETA ACERO INOXIDABLE</td>
+                                <td>$15.000</td>
+                                <td>$5.200</td>
+                                <td>$20.200</td>
+                            </tr>
+                            <!-- Fila 2 -->
+                            <tr>
+                                <td>102</td>
+                                <td>CANALETA CHAPA</td>
+                                <td>$15.000</td>
+                                <td>$5.200</td>
+                                <td>$20.200</td>
+                            </tr>
+                            <!-- Fila 3 -->
+                            <tr>
+                                <td>103</td>
+                                <td>CANALETA ACERO REFORZADO</td>
+                                <td>$15.000</td>
+                                <td>$5.200</td>
+                                <td>$20.200</td>
+                            </tr>
+                            <!-- Puedes agregar más filas según sea necesario -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="footer" class="div6"> 
+                    <p>Presupuesto valido por 7 (siete) dias a partir de la fecha de emision</p>
+                    <p id="notas">Notas: -</p>
+                </div>
+                <div id="totales" class="div7"> 
+    
+                    <h4>Total</h4>
+                    <h3 id="total">$60.600</h3>
+                </div>
+                <div id="membrete" class="div8"> 
+                    <h2>Zingueria Don Torcuato</h2>
+                    <h4>info@zingueriaadaro.com.ar</h4>
+                    <h4>Tel: 11-5308-8311</h4>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button id="pdfOut" class="pdfOut">Crear PDF</button>
+        </div>
+    </section>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="./presupuesto.js"></script>
+</html>
+

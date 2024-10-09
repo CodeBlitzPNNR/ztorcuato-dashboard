@@ -14,7 +14,7 @@ export default function DashboardLayout({ children }) {
     <>    
     
       <main className="flex min-h-screen ">
-      <aside className="bg-slate-800 w-1/5 flex flex-col justify-between py-4">
+      <aside className="bg-slate-800 w-[450px] flex flex-col justify-between py-4">
         <div className="flex flex-col justify-center items-center">
           <img className="max-w-[250px] w-full p-2" src="/logoWhite.png" alt="logo" />
           { showInfo ? (
@@ -25,6 +25,8 @@ export default function DashboardLayout({ children }) {
               </li>
               <li className="hover:translate-x-3 hover:text-pri duration-150 text-xs md:text-lg mb-2">
                 <a href="/dashboard/nuevoPresupuesto">- Nuevo presupuesto</a>
+              </li>  <li className="hover:translate-x-3 hover:text-pri duration-150 text-xs md:text-lg mb-2">
+                <a href="/dashboard/nuevoPresupuestoRapido">- Nuevo presupuesto rápido</a>
               </li>
             </ul>
           </nav>

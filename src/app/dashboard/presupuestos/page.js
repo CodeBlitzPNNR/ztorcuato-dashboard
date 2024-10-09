@@ -15,9 +15,11 @@ export default function Home() {
     try {      
       setLoading(true);
       const response = await axios.get(
-        "https://api-zingueria-adaro-cp.vercel.app/api/presupuestos"
+        // "https://api-zingueria-adaro-cp.vercel.app/api/presupuestos"
+        "https://pruebas-zingueria-adaro.vercel.app/api/presupuestos"
       );            
       setPresupuestos(response.data.baseDatos);
+      console.log(response.data.baseDatos)
       setLoading(false);
     } catch (error) {
       console.log(error);
