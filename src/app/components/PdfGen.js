@@ -2,22 +2,9 @@
 
 import "./pdfgen.css";
 import { formatCurrency } from "../helpers";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 export default function PdfGen( { pres } ) {   
-
-  const [totalSum, setTotalSum] = useState(0);   
-  console.log('presupuesto:', pres) 
-  
-  function sumaTotal() {
-    const list = pres.detalle
-    let totalCount = list.reduce((s, x) => s + parseInt(x.total), 0);
-    setTotalSum(totalCount)    
-  }
-
-  useEffect(() => {    
-    sumaTotal();      
-  }, [])
     
   return (
     <div id="mainTable" className="bg-gray-300 max-w-[900px] w-full m-auto p-2 flex flex-col">
@@ -48,25 +35,14 @@ export default function PdfGen( { pres } ) {
       <div className="flex bg-gray-100 py-2 text-sm font-normal">
         <div
           id="cliente"
-          className="div3 w-2/3 flex flex-col justify-center items-center"
+          className="div3 px-2 flex flex-col justify-center"
         >
-          <h2 id="razonSocial" className="font-bold text-2xl text-center">
+          <h2 id="razonSocial" className="font-bold text-2xl">
             {(pres.razonSocial).toUpperCase()}
           </h2>
-          <h3 id="razonSocial" className="text-lg text-center">
+          <h3 id="razonSocial" className="text-lg">
             CUIT: {pres.cuit}
           </h3>
-        </div>
-
-        <div id="vendedor" className="div2 w-1/3 text-xs text-center">
-          <h3>Vendedor: Hernan Adaro</h3>
-          <div id="detallePago" className="detallePago">
-            <p id="metodoPago">Metodo de Pago: {pres.metodo}</p>
-          </div>
-          <div id="envioDetalle" className="envioDetalle">
-            <p id="envio">Envio: {pres.envio ? 'Si' : 'No'}</p>
-            <p className="font-black" id="envioCosto">Costo de envío: {formatCurrency(8000)}</p>
-          </div>
         </div>
       </div>
 

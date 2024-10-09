@@ -15,11 +15,10 @@ export default function Home() {
     try {      
       setLoading(true);
       const response = await axios.get(
-        // "https://api-zingueria-adaro-cp.vercel.app/api/presupuestos"
-        "https://pruebas-zingueria-adaro.vercel.app/api/presupuestos"
+        "https://api-zingueria-adaro-cp.vercel.app/api/presupuestos"
+        // "https://pruebas-zingueria-adaro.vercel.app/api/presupuestos"
       );            
-      setPresupuestos(response.data.baseDatos);
-      console.log(response.data.baseDatos)
+      setPresupuestos(response.data.baseDatos);      
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -31,8 +30,7 @@ export default function Home() {
       setLoading(true);
       const response = await axios.get(
         `https://api-zingueria-adaro-cp.vercel.app/api/presupuestos/${filter}/${params}`
-      );
-      console.log(response)
+      );      
       setPresupuestos(response.data.presupuestos);
       setLoading(false);
     } catch (error) {
@@ -47,8 +45,7 @@ export default function Home() {
       <h1 className="font-bold text-2xl">Búsqueda de presupuestos</h1>
       <div className="p-3  m-auto max-w-[900px] rounded-xl my-3 flex gap-4">
         <form className="flex flex-col items-center m-auto gap-4 bg-gray-300 p-4 rounded-lg w-[50%]"
-        onSubmit={ handleSubmit((data) => {
-          console.log('razonsocial', data.razon)
+        onSubmit={ handleSubmit((data) => {          
           getFilterData('razonsocial', data.razon)
         })}>
           <input            
@@ -62,8 +59,7 @@ export default function Home() {
           </button>
         </form>
         <form className="flex flex-col items-center m-auto gap-4 bg-gray-300 p-4 rounded-lg w-[50%]"
-        onSubmit={ handleSubmit((data) => {
-          console.log('cuit', data.cuit)
+        onSubmit={ handleSubmit((data) => {          
           getFilterData('cuit', data.cuit)
         })}>
           <input

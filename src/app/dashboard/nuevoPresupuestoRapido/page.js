@@ -17,8 +17,7 @@ export default function Home() {
 
   const agregarItem = (item) => {    
     if (item.descripcion === "")  {
-      toastTrigger("error", "Chequear que los campos no esten vacíos"),
-      console.log("detalle 1", detalle)
+      toastTrigger("error", "Chequear que los campos no esten vacíos")      
     } else {
     setDetalle([
       ...detalle,
@@ -27,10 +26,8 @@ export default function Home() {
         descripcion: item.descripcion
       },
     ]);
-    toastTrigger("success", "Item agregado");
-    console.log("detalle 1", detalle)
-    reset({cantidad:  '', descripcion: ''});
-    console.log("detalle 2", detalle)
+    toastTrigger("success", "Item agregado");    
+    reset({cantidad:  '', descripcion: ''});    
   }};
 
   const agregarCliente = (data) => {
@@ -71,13 +68,12 @@ export default function Home() {
   async function postData(presupuesto) {
     axios
       .post(
-        // "https://api-zingueria-adaro-cp.vercel.app/api/presupuestos/",
-        "https://pruebas-zingueria-adaro.vercel.app/api/presupuestos/",
+        "https://api-zingueria-adaro-cp.vercel.app/api/presupuestos/",
+        // "https://pruebas-zingueria-adaro.vercel.app/api/presupuestos/",
         presupuesto
       )
       .then(function (response) {
-        console.log("Presupuesto:", presupuesto);
-        console.log("Respuesta:", response);
+        
         toastTrigger(
           "success",
           "Presupuesto agregado exitosamente, espere mientras es redireccionado."
@@ -90,8 +86,7 @@ export default function Home() {
           "error",
           "Hubo un error enviando el presupuesto, espere unos minutos e intente de nuevo o contacte a mantenimiento."
         );
-      });
-    console.log(presupuesto)
+      });    
   }
 
   return showInfo ? (

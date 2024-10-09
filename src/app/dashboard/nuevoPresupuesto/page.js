@@ -87,13 +87,11 @@ export default function Home() {
   async function postData(presupuesto) {
     axios
       .post(
-        // "https://api-zingueria-adaro-cp.vercel.app/api/presupuestos/",
-        "https://pruebas-zingueria-adaro.vercel.app/api/presupuestos/",
+        "https://api-zingueria-adaro-cp.vercel.app/api/presupuestos/",
+        // "https://pruebas-zingueria-adaro.vercel.app/api/presupuestos/",
         presupuesto
       )
-      .then(function (response) {
-        console.log("Presupuesto:", presupuesto);
-        console.log("Respuesta:", response);
+      .then(function (response) {        
         toastTrigger(
           "success",
           "Presupuesto agregado exitosamente, espere mientras es redireccionado."

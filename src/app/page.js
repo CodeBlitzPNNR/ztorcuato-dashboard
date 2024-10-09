@@ -10,16 +10,13 @@ export default function Home() {
   const { register, handleSubmit, reset } = useForm();
   const router = useRouter()
 
-  async function postUserData(data) {
-    console.log(data)
+  async function postUserData(data) {    
     axios
       .post(
         "https://zingueria-login.vercel.app/api/session/",
         data
       )
-      .then(function (response) {
-        console.log("Data:", response);
-        console.log("Respuesta:", response.data.token, response.status);
+      .then(function (response) {        
         const session = response.data.token
         localStorage.setItem('sessionID', session)
         response.status === 201 ? router.push('/dashboard') : toastTrigger('error', 'Usuario no encontrado o incorrecto.')

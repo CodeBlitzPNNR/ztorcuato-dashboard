@@ -1,13 +1,10 @@
 'use client'
 
-import "./pdfgen.css";
+import "./pdfgen2.css";
 import { formatCurrency } from "../helpers";
 
 
 export default function PdfGen( { pres } ) {   
-     
-  console.log('presupuesto:', pres) 
-  
   return (
     <div id="mainTable" className="bg-gray-300 max-w-[900px] w-full m-auto p-2 flex flex-col">
       <div className="flex justify-between py-2 bg-slate-700 text-white">
