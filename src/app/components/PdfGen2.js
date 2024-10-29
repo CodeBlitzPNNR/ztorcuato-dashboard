@@ -4,7 +4,7 @@ import "./pdfgen2.css";
 import { formatCurrency } from "../helpers";
 
 
-export default function PdfGen( { pres } ) {   
+export default function PdfGen({ pres }) {
   return (
     <div id="mainTable" className="bg-gray-300 max-w-[900px] w-full m-auto p-2 flex flex-col">
       <div className="flex justify-between py-2 bg-slate-700 text-white">
@@ -13,7 +13,7 @@ export default function PdfGen( { pres } ) {
           className="div8 flex flex-col items-center justify-center p-2 w-2/3"
         >
           <h2 className="text-xl font-bold">Zingueria Don Torcuato</h2>
-          <h4 className="text-sm">obras@zingueriaadaro.com.ar</h4>
+          <h4 className="text-sm">obras@zingueriadontorcuato.com</h4>
           <h4 className="text-sm">Tel: 11-5308-8311</h4>
         </div>
         <div
@@ -42,7 +42,7 @@ export default function PdfGen( { pres } ) {
           <h3 id="razonSocial" className="text-lg">
             CUIT: {pres.cuit}
           </h3>
-        </div>    
+        </div>
       </div>
 
       <hr className="my-2" />
@@ -57,20 +57,20 @@ export default function PdfGen( { pres } ) {
         <div id="detalle" className="div5 w-full">
           <table className="blueTable">
             <thead>
-              <tr>                
+              <tr>
                 <th>Cantidad</th>
-                <th>Detalle</th>                
+                <th>Detalle</th>
               </tr>
             </thead>
             <tbody>
-            {pres.detalle.map((item, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{item.cantidad}</td>                      
-                      <td>{item.descripcion}</td>                      
-                    </tr>
-                  );
-                })}        
+              {pres.detalle.map((item, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{item.cantidad}</td>
+                    <td>{item.descripcion}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -93,7 +93,7 @@ export default function PdfGen( { pres } ) {
           <p className="text-xs text-gray-600 italic">
             Presupuesto valido por 7 (siete) dias a partir de la fecha de
             emisión
-          </p>          
+          </p>
         </div>
       </div>
 

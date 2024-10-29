@@ -4,8 +4,8 @@ import "./pdfgen.css";
 import { formatCurrency } from "../helpers";
 import { useEffect } from "react";
 
-export default function PdfGen( { pres } ) {   
-    
+export default function PdfGen({ pres }) {
+
   return (
     <div id="mainTable" className="bg-gray-300 max-w-[900px] w-full m-auto p-2 flex flex-col">
       <div className="flex justify-between py-2 bg-slate-700 text-white">
@@ -14,7 +14,7 @@ export default function PdfGen( { pres } ) {
           className="div8 flex flex-col items-center justify-center p-2 w-2/3"
         >
           <h2 className="text-xl font-bold">Zingueria Don Torcuato</h2>
-          <h4 className="text-sm">obras@zingueriaadaro.com.ar</h4>
+          <h4 className="text-sm">obras@zingueriadontorcuato.com</h4>
           <h4 className="text-sm">Tel: 11-5308-8311</h4>
         </div>
         <div
@@ -68,18 +68,18 @@ export default function PdfGen( { pres } ) {
               </tr>
             </thead>
             <tbody>
-            {pres.detalle.map((item, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{item.codigo}</td>
-                      <td>{item.descripcion}</td>
-                      <td>{formatCurrency(item.precio)}</td>
-                      <td>{item.cantidad}</td>
-                      <td>{item.impuesto ? 'Si' : 'No'}</td>                      
-                      <td>{formatCurrency(item.total)}</td>                      
-                    </tr>
-                  );
-                })}        
+              {pres.detalle.map((item, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{item.codigo}</td>
+                    <td>{item.descripcion}</td>
+                    <td>{formatCurrency(item.precio)}</td>
+                    <td>{item.cantidad}</td>
+                    <td>{item.impuesto ? 'Si' : 'No'}</td>
+                    <td>{formatCurrency(item.total)}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
