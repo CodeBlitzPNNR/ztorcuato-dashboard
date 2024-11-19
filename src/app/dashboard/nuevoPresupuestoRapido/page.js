@@ -15,20 +15,21 @@ export default function Home() {
   const showInfo = useAuth();
   const router = useRouter();
 
-  const agregarItem = (item) => {    
-    if (item.descripcion === "")  {
-      toastTrigger("error", "Chequear que los campos no esten vacíos")      
+  const agregarItem = (item) => {
+    if (item.descripcion === "") {
+      toastTrigger("error", "Chequear que los campos no esten vacíos")
     } else {
-    setDetalle([
-      ...detalle,
-      {
-        cantidad: parseInt(item.cantidad),
-        descripcion: item.descripcion
-      },
-    ]);
-    toastTrigger("success", "Item agregado");    
-    reset({cantidad:  '', descripcion: ''});    
-  }};
+      setDetalle([
+        ...detalle,
+        {
+          cantidad: parseFloat(item.cantidad),
+          descripcion: item.descripcion
+        },
+      ]);
+      toastTrigger("success", "Item agregado");
+      reset({ cantidad: '', descripcion: '' });
+    }
+  };
 
   const agregarCliente = (data) => {
     if (detalle.length === 0) {
@@ -55,7 +56,7 @@ export default function Home() {
       ...cliente,
       detalle: detalle,
       tipo: "simp"
-    };    
+    };
     postData(presup);
   };
 
@@ -73,7 +74,7 @@ export default function Home() {
         presupuesto
       )
       .then(function (response) {
-        
+
         toastTrigger(
           "success",
           "Presupuesto agregado exitosamente, espere mientras es redireccionado."
@@ -86,7 +87,7 @@ export default function Home() {
           "error",
           "Hubo un error enviando el presupuesto, espere unos minutos e intente de nuevo o contacte a mantenimiento."
         );
-      });    
+      });
   }
 
   return showInfo ? (
@@ -206,26 +207,27 @@ export default function Home() {
           {/* DETALLE */}
           <div>
 
-          <div className="mb-2 p-2">
+            <div className="mb-2 p-2">
               <label className="text-gray-800 text-md font-bold">
                 Cantidad:
               </label>
               <input
                 id="cantidad"
                 type="number"
+                step=".01"
                 className="mt-1 block w-full p-1 bg-gray-50"
                 placeholder="Cantidad de items"
                 {...register("cantidad")}
               />
             </div>
 
-          <div className="mb-2 p-2">
+            <div className="mb-2 p-2">
               <label className="text-gray-800 text-md font-bold">
                 Detalle del item:
               </label>
-              <textarea                            
-                id="descripcion"                              
-                className="mt-1 block w-full p-1 bg-gray-50 resize-none h-40"   
+              <textarea
+                id="descripcion"
+                className="mt-1 block w-full p-1 bg-gray-50 resize-none h-40"
                 placeholder="Ingrese descripcion del producto o servicio"
                 {...register("descripcion")}
               />
