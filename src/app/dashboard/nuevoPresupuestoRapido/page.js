@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { formatCurrency, useAuth, toastTrigger } from "@/app/helpers";
 import { useForm } from "react-hook-form";
@@ -10,10 +10,21 @@ import axios from "axios";
 export default function Home() {
   const [detalle, setDetalle] = useState([]);
   const [cliente, setCliente] = useState({});
-  const [finalizar, setFinalizar] = useState(0);
-  const { register, handleSubmit, reset } = useForm();
+  const [finalizar, setFinalizar] = useState();
+  const [total, setTotal] = useState(0)
+  const { register, handleSubmit, reset, watch } = useForm();
   const showInfo = useAuth();
   const router = useRouter();
+
+  const subtotal = watch("subtotal");
+  useEffect(() => {
+    if (subtotal) {
+      const calculado = parseFloat(subtotal) * 1.21;
+      setTotal(isNaN(calculado) ? 0 : calculado.toFixed(2)); // Asegurar que no se genere NaN
+    } else {
+      setTotal(0);
+    }
+  }, [subtotal]);
 
   const agregarItem = (item) => {
     if (item.descripcion === "") {
@@ -40,7 +51,7 @@ export default function Home() {
         cuit: parseInt(data.cuit),
         fecha: data.fecha,
         observaciones: data.observaciones,
-        totalPresupuesto: data.total,
+        totalPresupuesto: total,
         subtotal: data.subtotal
       });
       toastTrigger(
@@ -160,11 +171,11 @@ export default function Home() {
               htmlFor="subtotal"
               className="text-gray-800 text-md font-bold"
             >
-              Ingresé el subtotal
+              Subtotal:
             </label>
             <input
               id="subtotal"
-              type="text"
+              type="number"
               className="block w-48 p-1 bg-gray-50 rounded-lg"
               placeholder="Subtotal"
               {...register("subtotal")}
@@ -173,17 +184,18 @@ export default function Home() {
           <hr className="my-2" />
           <div className="flex justify-between">
             <label
-              htmlFor="subtotal"
+              htmlFor="total"
               className="text-gray-800 text-md font-bold"
             >
-              Total
+              Total:
             </label>
             <input
               id="total"
               type="number"
               className="block w-48 p-1 bg-gray-50 rounded-lg"
               placeholder="Total"
-              {...register("total")}
+              value={total} // Asigna el valor calculado
+              readOnly // Solo lectura
             />
           </div>
           <hr className="my-4" />
