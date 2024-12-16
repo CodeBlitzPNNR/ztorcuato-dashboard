@@ -66,8 +66,8 @@ export default function PdfGen({ pres }) {
               {pres.detalle.map((item, index) => {
                 return (
                   <tr key={index}>
-                    <td>{item.cantidad}</td>
-                    <td>{item.descripcion}</td>
+                    <td className="text-center">{item.cantidad}</td>
+                    <td className="descripcion">{item.descripcion}</td>
                   </tr>
                 );
               })}
